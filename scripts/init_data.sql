@@ -1,7 +1,5 @@
 DELETE FROM books;
-
 DELETE FROM users;
-
 DELETE FROM reviews;
 
 INSERT INTO
@@ -38,23 +36,12 @@ VALUES
     ('Miguel de Cervantes', 'Don Quixote');
 
 INSERT INTO
-    users (email, password, role)
+    users (email, keycloak_id)
 VALUES
-    (
-        'apultyn@example.com',
-        '$argon2id$v=19$m=65536,t=3,p=4$Z7SxehmAvO8Vwewvn/0TCA$MDxYmO80md0XmjDA0n6XlFB+145JrT9g7s9DvXimPGA',
-        'ADMIN'
-    ),
-    (
-        'mpultyn@example.com',
-        '$argon2id$v=19$m=65536,t=3,p=4$Z7SxehmAvO8Vwewvn/0TCA$MDxYmO80md0XmjDA0n6XlFB+145JrT9g7s9DvXimPGA',
-        'USER'
-    ),
-    (
-        'bpultyn@example.com',
-        '$argon2id$v=19$m=65536,t=3,p=4$Z7SxehmAvO8Vwewvn/0TCA$MDxYmO80md0XmjDA0n6XlFB+145JrT9g7s9DvXimPGA',
-        'USER'
-    );
+    ('apultyn@example.com', '1b5b04e4-8400-4de9-86bb-4761f17cba77'),
+    ('bpultyn@example.com', '214e8b44-bcbb-4960-9e4e-75fb582fd514'),
+    ('mpultyn@example.com', 'e5a71a7f-0a34-4d4f-b9f9-78aa024a0db9')
+    ;
 
 INSERT INTO
     reviews (comment, stars, bookid, userid)

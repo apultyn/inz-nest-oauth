@@ -31,24 +31,21 @@ export class BookController {
     }
 
     @Roles(Role.BOOK_ADMIN)
-    @UseGuards(RolesGuard)
-    @UseGuards(OauthGuard)
+    @UseGuards(OauthGuard, RolesGuard)
     @Post('')
     create(@Body() dto: BookCreateReq) {
         return this.bookService.create(dto);
     }
 
     @Roles(Role.BOOK_ADMIN)
-    @UseGuards(RolesGuard)
-    @UseGuards(OauthGuard)
+    @UseGuards(OauthGuard, RolesGuard)
     @Patch(':id')
     update(@Param('id') id: string, @Body() dto: BookUpdateReq) {
         return this.bookService.update(Number(id), dto);
     }
 
     @Roles(Role.BOOK_ADMIN)
-    @UseGuards(RolesGuard)
-    @UseGuards(OauthGuard)
+    @UseGuards(OauthGuard, RolesGuard)
     @Delete(':id')
     @HttpCode(204)
     delete(@Param('id') id: string) {
