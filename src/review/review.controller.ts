@@ -13,7 +13,7 @@ import { ReviewService } from './review.service';
 import { Roles } from 'src/auth/decorator';
 import { Role } from '@prisma/client';
 import { RolesGuard } from 'src/auth/guard';
-import { JwtGuard } from 'src/auth/guard/jwt.guard';
+import { OauthGuard } from 'src/auth/guard/oauth.guard';
 import { ReviewCreateReq, ReviewUpdateReq } from 'src/dto/review.dto';
 import { GetUserId } from 'src/auth/decorator/user.decorator';
 
@@ -30,9 +30,9 @@ export class ReviewController {
         return this.reviewService.getById(Number(id));
     }
 
-    @Roles(Role.BOOK_USER, Role.BOOK_ADMIN)
+    @Roles(Role.BOOK_ADMIN)
     @UseGuards(RolesGuard)
-    @UseGuards(JwtGuard)
+    @UseGuards(OauthGuard)
     @Post('')
     create(@Body() dto: ReviewCreateReq, @GetUserId('id') userId: number) {
         return this.reviewService.create(dto, userId);
@@ -40,7 +40,7 @@ export class ReviewController {
 
     @Roles(Role.BOOK_ADMIN)
     @UseGuards(RolesGuard)
-    @UseGuards(JwtGuard)
+    @UseGuards(OauthGuard)
     @Patch(':id')
     update(@Body() dto: ReviewUpdateReq, @Param('id') id: string) {
         return this.reviewService.update(dto, Number(id));
@@ -48,7 +48,7 @@ export class ReviewController {
 
     @Roles(Role.BOOK_ADMIN)
     @UseGuards(RolesGuard)
-    @UseGuards(JwtGuard)
+    @UseGuards(OauthGuard)
     @Delete(':id')
     @HttpCode(204)
     delete(@Param('id') id: string) {

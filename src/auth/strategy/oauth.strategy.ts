@@ -6,7 +6,6 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { passportJwtSecret } from 'jwks-rsa';
-import { use } from 'passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -19,7 +18,7 @@ interface KeycloakPayload {
 }
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
+export class OauthStrategy extends PassportStrategy(Strategy, 'oauth') {
     constructor(
         config: ConfigService,
         private prisma: PrismaService,
@@ -32,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
                 jwksRequestsPerMinute: 5,
                 jwksUri: config.get('KEYCLOAK_JWKS_URI') || 'localhost:8443',
             }),
-            issuer: config.get('KEYCLOAK_ISSUER_URL'), 
+            issuer: config.get('KEYCLOAK_ISSUER_URL'),
             algorithms: ['RS256'],
         });
     }

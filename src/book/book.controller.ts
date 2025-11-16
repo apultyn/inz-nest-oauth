@@ -15,7 +15,7 @@ import { BookCreateReq, BookUpdateReq } from 'src/dto/book.dto';
 import { Roles } from 'src/auth/decorator';
 import { Role } from '@prisma/client';
 import { RolesGuard } from 'src/auth/guard';
-import { JwtGuard } from 'src/auth/guard/jwt.guard';
+import { OauthGuard } from 'src/auth/guard/oauth.guard';
 
 @Controller('api/books')
 export class BookController {
@@ -32,7 +32,7 @@ export class BookController {
 
     @Roles(Role.BOOK_ADMIN)
     @UseGuards(RolesGuard)
-    @UseGuards(JwtGuard)
+    @UseGuards(OauthGuard)
     @Post('')
     create(@Body() dto: BookCreateReq) {
         return this.bookService.create(dto);
@@ -40,7 +40,7 @@ export class BookController {
 
     @Roles(Role.BOOK_ADMIN)
     @UseGuards(RolesGuard)
-    @UseGuards(JwtGuard)
+    @UseGuards(OauthGuard)
     @Patch(':id')
     update(@Param('id') id: string, @Body() dto: BookUpdateReq) {
         return this.bookService.update(Number(id), dto);
@@ -48,7 +48,7 @@ export class BookController {
 
     @Roles(Role.BOOK_ADMIN)
     @UseGuards(RolesGuard)
-    @UseGuards(JwtGuard)
+    @UseGuards(OauthGuard)
     @Delete(':id')
     @HttpCode(204)
     delete(@Param('id') id: string) {
