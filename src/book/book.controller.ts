@@ -21,34 +21,34 @@ import { OauthGuard } from 'src/auth/guard/oauth.guard';
 export class BookController {
     constructor(private bookService: BookService) {}
     @Get()
-    getList(@Query('searchString') searchString: string = '') {
-        return this.bookService.getList(searchString);
+    async getList(@Query('searchString') searchString: string = '') {
+        return await this.bookService.getList(searchString);
     }
 
     @Get(':id')
-    getById(@Param('id') id: string) {
-        return this.bookService.getById(Number(id));
+    async getById(@Param('id') id: string) {
+        return await this.bookService.getById(Number(id));
     }
 
     @Roles(Role.BOOK_ADMIN)
     @UseGuards(OauthGuard, RolesGuard)
     @Post('')
-    create(@Body() dto: BookCreateReq) {
-        return this.bookService.create(dto);
+    async create(@Body() dto: BookCreateReq) {
+        return await this.bookService.create(dto);
     }
 
     @Roles(Role.BOOK_ADMIN)
     @UseGuards(OauthGuard, RolesGuard)
     @Patch(':id')
-    update(@Param('id') id: string, @Body() dto: BookUpdateReq) {
-        return this.bookService.update(Number(id), dto);
+    async update(@Param('id') id: string, @Body() dto: BookUpdateReq) {
+        return await this.bookService.update(Number(id), dto);
     }
 
     @Roles(Role.BOOK_ADMIN)
     @UseGuards(OauthGuard, RolesGuard)
     @Delete(':id')
     @HttpCode(204)
-    delete(@Param('id') id: string) {
-        return this.bookService.delete(Number(id));
+    async delete(@Param('id') id: string) {
+        return await this.bookService.delete(Number(id));
     }
 }
